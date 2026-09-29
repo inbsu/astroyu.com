@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+/*
+ * Noto Serif SC (SIL OFL), subset to only the 44 characters set in the serif
+ * face. Apple devices keep Songti SC; Windows/Android get this instead of SimSun.
+ * If the intro, postcard note, postmark or app notes gain new characters, regenerate the file
+ * (see README) — characters outside the subset fall back to the system serif.
+ */
+@font-face {
+  font-family: "Astroyu Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/noto-serif-sc-subset.woff2") format("woff2");
+  unicode-range: U+3002, U+4E00, U+4E0D, U+4E16, U+4E48, U+4EEC, U+5230, U+523B, U+5728, U+5730, U+575B, U+5927, U+5929, U+597D, U+5DF1, U+5E76, U+5F80, U+5FC6, U+6070, U+60F3, U+6211, U+6240, U+6614, U+666F, U+6837, U+7231, U+754C, U+7684, U+770B, U+795D, U+7ACB, U+800C, U+80A9, U+80FD, U+81EA, U+85CF, U+8981, U+8BDD, U+8DEF, U+8FD9, U+90FD, U+987A, U+98CE, U+FF0C;
+}
+
+:root {
+  color-scheme: light dark;
+  --bg: #f7f5f0;
+  --paper: #fffdf8;
+  --ink: #1c1c1f;
+  --muted: #85847f;
+  --line: rgba(28, 28, 31, .1);
+  --shadow: 0 1px 2px rgba(40, 30, 10, .08), 0 18px 40px -18px rgba(40, 30, 10, .35);
+  --orange: #ff6241;
+  --grain-opacity: .05;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --song: "Songti SC", "Astroyu Serif", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131312;
+    --paper: #1c1c1a;
+    --ink: #ebe9e4;
+    --muted: #8d8b85;
+    --line: rgba(255, 255, 255, .1);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 18px 40px -18px rgba(0, 0, 0, .8);
+    --grain-opacity: .03;
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+/* Faint paper grain so the page feels like the illustration's stock. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 3px; }
+img { display: block; max-width: 100%; height: auto; }
+::selection { background: var(--orange); color: #fff; }
+
+.page { width: min(960px, calc(100% - 48px)); margin: 0 auto; padding: 44px 0 36px; }
+
+.top { display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(56px, 9vw, 112px); }
+.wordmark { font-size: 27px; font-weight: 850; line-height: 1; letter-spacing: -.1em; }
+.wordmark span { color: var(--orange); }
+
+/* Hero: words on the left, a postcard on the right */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) 340px; align-items: center; gap: clamp(48px, 8vw, 104px); margin-bottom: clamp(88px, 12vw, 144px); }
+.intro { margin: 0; font-family: var(--song); font-weight: 400; }
+.intro .line { display: block; font-size: clamp(20px, 3.2vw, 32px); line-height: 1.6; letter-spacing: .03em; }
+.intro .line > span { display: block; }
+.intro .line + .line { position: relative; margin-top: 30px; padding-top: 30px; }
+.intro .line + .line::before { content: ""; position: absolute; top: 0; left: 0; width: 28px; height: 2px; border-radius: 2px; background: var(--orange); }
+
+.postcard { position: relative; margin: 0; transform: rotate(2.2deg); animation: settle 1s cubic-bezier(.2, .7, .2, 1) both; }
+.postcard-frame { padding: 10px 10px 12px; border-radius: 4px; background: var(--paper); box-shadow: var(--shadow); }
+.postcard-frame img { width: 100%; border-radius: 2px; }
+/* A note written on the postcard, one clause per line. */
+.postcard figcaption { margin-top: 16px; padding-left: 4px; color: var(--muted); font-family: var(--song); font-size: 14px; line-height: 1.85; letter-spacing: .06em; }
+.postcard figcaption span { display: block; }
+.postmark { position: absolute; top: -34px; left: -46px; width: 112px; height: 112px; transform: rotate(-16deg); fill: none; stroke: var(--orange); stroke-width: 1.6; opacity: .88; mix-blend-mode: multiply; }
+.postmark text { fill: var(--orange); stroke: none; font-family: var(--mono); font-size: 9.5px; letter-spacing: 1.6px; }
+.postmark .postmark-ring { font-size: 8px; letter-spacing: 0; }
+.postmark .postmark-day { font-size: 13px; font-weight: 700; letter-spacing: .5px; }
+.postmark .postmark-year { font-family: var(--song); font-size: 10px; letter-spacing: 2px; }
+@media (prefers-color-scheme: dark) { .postmark { mix-blend-mode: normal; } }
+
+/* Apps */
+.label { margin: 0 0 16px; color: var(--muted); font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; }
+.apps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 168px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--paper) 60%, transparent);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.app:hover { transform: translateY(-3px); border-color: transparent; box-shadow: var(--shadow); background: var(--paper); }
+.app-index { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+.app-link { margin-top: auto; font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+.app-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.app-note { color: var(--muted); font-family: var(--song); font-size: 14px; letter-spacing: .08em; }
+.app-foot { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); font-family: var(--mono); font-size: 11px; }
+.app-domain { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color .2s ease; }
+.app:hover .app-domain { color: var(--orange); }
+.app-provider { position: relative; z-index: 1; flex-shrink: 0; color: var(--muted); transition: color .2s ease; }
+.app-provider:hover { color: var(--ink); }
+
+.footer { display: flex; justify-content: space-between; margin-top: clamp(72px, 10vw, 120px); padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+
+@keyframes settle { from { opacity: 0; transform: translateY(16px) rotate(6deg); } to { opacity: 1; transform: rotate(2.2deg); } }
+
+@media (max-width: 800px) {
+  .hero { grid-template-columns: 1fr; }
+  .postcard { width: min(100% - 40px, 340px); margin-left: auto; margin-right: 12px; }
+  .apps { grid-template-columns: 1fr; }
+  .app { min-height: 0; display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: 14px; }
+  .app-index { grid-row: 1; }
+  .app-link { margin-top: 0; font-size: 18px; }
+  .app-note { grid-column: 2; }
+  .app-foot { grid-column: 1 / -1; }
+}
+
+@media (max-width: 480px) {
+  .page { width: calc(100% - 40px); padding-top: 32px; }
+  .wordmark { font-size: 24px; }
+  .postmark { width: 92px; height: 92px; top: -28px; left: -30px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}
