@@ -1,9 +1,10 @@
 /* 暂时隐藏的文章、计划与联系栏目保存在 git 提交 3bb8b67 的 app/page.tsx 中，需要时可从那里恢复。 */
 
-const apps = [
-  { name: "Relay", href: "https://relay.astroyu.com", note: "看世界" },
-  { name: "Photos", href: "https://photos.astroyu.com", note: "忆往昔" },
-  { name: "Videos", href: "https://v.astroyu.com", note: "藏所爱" },
+// Relay deliberately names no provider, so the homepage doesn't advertise what runs behind it.
+const apps: { name: string; href: string; domain: string; note: string; provider?: string; providerHref?: string }[] = [
+  { name: "Relay", href: "https://relay.astroyu.com", domain: "relay.astroyu.com", note: "看世界" },
+  { name: "Photos", href: "https://photos.astroyu.com", domain: "photos.astroyu.com", note: "忆往昔", provider: "Immich", providerHref: "https://immich.app/" },
+  { name: "Videos", href: "https://v.astroyu.com", domain: "v.astroyu.com", note: "藏所爱", provider: "Jellyfin", providerHref: "https://jellyfin.org/" },
 ];
 
 function Postmark() {
@@ -55,17 +56,18 @@ export default function Home() {
 
       <section className="apps-section" aria-labelledby="apps-title">
         <h2 id="apps-title" className="label">Apps</h2>
-        {/* Apps are paper tickets, printed on the same stock as the postcard. */}
         <ul className="apps">
-          {apps.map((app) => (
-            <li key={app.name}>
-              <a className="app" href={app.href} target="_blank" rel="noreferrer">
-                <span className="ticket">
-                  <span className="ticket-note">{app.note}</span>
-                  <span className="ticket-name">{app.name}</span>
-                  <span className="ticket-arrow" aria-hidden="true">↗</span>
-                </span>
-              </a>
+          {apps.map((app, index) => (
+            <li className="app" key={app.name}>
+              <span className="app-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <a className="app-link" href={app.href} target="_blank" rel="noreferrer">{app.name}</a>
+              <span className="app-note">{app.note}</span>
+              <span className="app-foot">
+                <span className="app-domain">{app.domain}</span>
+                {app.provider && (
+                  <a className="app-provider" href={app.providerHref} target="_blank" rel="noreferrer">{app.provider}</a>
+                )}
+              </span>
             </li>
           ))}
         </ul>
