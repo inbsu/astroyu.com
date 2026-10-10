@@ -47,19 +47,18 @@ test("server-renders Yu Hang's minimal homepage", async () => {
   assert.doesNotMatch(html, /about-volcano-portrait\.jpg|鸡蛋/);
   assert.match(html, /与航<span>。<\/span>/);
 
-  assert.ok(html.includes('href="https://relay.astroyu.com"'));
-  assert.ok(html.includes("看世界"));
-  assert.doesNotMatch(html, /3X-UI|docs\.sanaei\.dev/i);
-
-  for (const [url, note, provider, providerUrl] of [
-    ["https://photos.astroyu.com", "忆往昔", "Immich", "https://immich.app/"],
-    ["https://v.astroyu.com", "藏所爱", "Jellyfin", "https://jellyfin.org/"],
+  for (const [url, name, note] of [
+    ["https://relay.astroyu.com", "Relay", "看世界"],
+    ["https://photos.astroyu.com", "Photos", "忆往昔"],
+    ["https://v.astroyu.com", "Videos", "藏所爱"],
   ]) {
     assert.ok(html.includes(`href="${url}"`), url);
-    assert.ok(html.includes(note), note);
-    assert.ok(html.includes(`href="${providerUrl}"`), providerUrl);
-    assert.ok(html.includes(`>${provider}</a>`), provider);
+    assert.ok(html.includes(`>${name}</span>`), name);
+    assert.ok(html.includes(`>${note}</span>`), note);
   }
+  // App icons carry only a name and a note: no domains, no providers.
+  assert.doesNotMatch(html, />(?:relay|photos|v)\.astroyu\.com</);
+  assert.doesNotMatch(html, /3X-UI|docs\.sanaei\.dev|immich\.app|jellyfin\.org/i);
   assert.doesNotMatch(html, /https:\/\/(?:relay|photos|v)\.inbsu\.com/);
 
   assert.match(html, />© 2026 与航</);

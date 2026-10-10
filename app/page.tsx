@@ -1,10 +1,37 @@
 /* 暂时隐藏的文章、计划与联系栏目保存在 git 提交 3bb8b67 的 app/page.tsx 中，需要时可从那里恢复。 */
 
-// Relay deliberately names no provider, so the homepage doesn't advertise what runs behind it.
-const apps: { name: string; href: string; domain: string; note: string; provider?: string; providerHref?: string }[] = [
-  { name: "Relay", href: "https://relay.astroyu.com", domain: "relay.astroyu.com", note: "看世界" },
-  { name: "Photos", href: "https://photos.astroyu.com", domain: "photos.astroyu.com", note: "忆往昔", provider: "Immich", providerHref: "https://immich.app/" },
-  { name: "Videos", href: "https://v.astroyu.com", domain: "v.astroyu.com", note: "藏所爱", provider: "Jellyfin", providerHref: "https://jellyfin.org/" },
+// Icons share the postcard's language: ink line work on paper, one orange accent each.
+const icons = {
+  compass: (
+    <>
+      <circle cx="16" cy="16" r="10.5" />
+      <g transform="rotate(35 16 16)">
+        <path className="accent" d="M16 7.2 19.4 16h-6.8z" />
+        <path d="M12.6 16h6.8L16 24.8z" />
+      </g>
+    </>
+  ),
+  photos: (
+    <>
+      <rect x="6.5" y="7" width="15" height="18" rx="1.5" transform="rotate(-9 14 16)" className="faint" />
+      <rect x="10" y="8" width="15" height="18" rx="1.5" className="card" />
+      <path d="M12 22.5 15.5 18l2.5 2.5 1.8-1.8 3.2 3.8" />
+      <circle cx="20.8" cy="12.6" r="1.7" className="accent" />
+    </>
+  ),
+  screen: (
+    <>
+      <rect x="5.5" y="8" width="21" height="14.5" rx="2.5" />
+      <path d="M12.5 26h7" />
+      <path className="accent" d="M14.2 12.3v5.9l5-2.95z" />
+    </>
+  ),
+};
+
+const apps = [
+  { name: "Relay", href: "https://relay.astroyu.com", note: "看世界", icon: icons.compass },
+  { name: "Photos", href: "https://photos.astroyu.com", note: "忆往昔", icon: icons.photos },
+  { name: "Videos", href: "https://v.astroyu.com", note: "藏所爱", icon: icons.screen },
 ];
 
 function Postmark() {
@@ -57,17 +84,15 @@ export default function Home() {
       <section className="apps-section" aria-labelledby="apps-title">
         <h2 id="apps-title" className="label">Apps</h2>
         <ul className="apps">
-          {apps.map((app, index) => (
-            <li className="app" key={app.name}>
-              <span className="app-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              <a className="app-link" href={app.href} target="_blank" rel="noreferrer">{app.name}</a>
-              <span className="app-note">{app.note}</span>
-              <span className="app-foot">
-                <span className="app-domain">{app.domain}</span>
-                {app.provider && (
-                  <a className="app-provider" href={app.providerHref} target="_blank" rel="noreferrer">{app.provider}</a>
-                )}
-              </span>
+          {apps.map((app) => (
+            <li key={app.name}>
+              <a className="app" href={app.href} target="_blank" rel="noreferrer">
+                <span className="app-icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32">{app.icon}</svg>
+                </span>
+                <span className="app-name">{app.name}</span>
+                <span className="app-note">{app.note}</span>
+              </a>
             </li>
           ))}
         </ul>
