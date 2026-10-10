@@ -56,7 +56,7 @@ test("server-renders Yu Hang's minimal homepage", async () => {
     assert.ok(html.includes(`>${name}</span>`), name);
     assert.ok(html.includes(`>${note}</span>`), note);
   }
-  // App icons carry only a name and a note: no domains, no providers.
+  // App tickets carry only a name and a note: no domains, no providers.
   assert.doesNotMatch(html, />(?:relay|photos|v)\.astroyu\.com</);
   assert.doesNotMatch(html, /3X-UI|docs\.sanaei\.dev|immich\.app|jellyfin\.org/i);
   assert.doesNotMatch(html, /https:\/\/(?:relay|photos|v)\.inbsu\.com/);
