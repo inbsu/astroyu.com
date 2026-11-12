@@ -28,7 +28,7 @@ export default function Home() {
     <main className="page" id="top">
       <header className="top">
         <a className="wordmark" href="#top" aria-label="与航，返回顶部">
-          <img className="brand-mark" src="/logo.svg" width={30} height={30} alt="" />
+          <img className="brand-mark" src="/logo.svg?v=3" width={30} height={30} alt="" />
           <span className="brand-name">与航<span>。</span></span>
         </a>
       </header>
