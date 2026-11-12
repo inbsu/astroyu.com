@@ -9,11 +9,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const socialImage = `${protocol}://${host}/og.jpg`;
 
   return {
-    title: "与航 — 向前看",
+    title: "与航 - 向前看",
     description: "顺路的话，我们看一样的风景。不顺路的话，祝我们都能看到自己想要的风景。",
     icons: { icon: "/favicon.svg" },
     openGraph: {
-      title: "与航 — 向前看",
+      title: "与航 - 向前看",
       description: "顺路的话，我们看一样的风景。",
       type: "website",
       locale: "zh_CN",
@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: "与航 — 向前看",
+      title: "与航 - 向前看",
       description: "顺路的话，我们看一样的风景。",
       images: [socialImage],
     },
