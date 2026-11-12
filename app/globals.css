@@ -96,11 +96,12 @@ img { display: block; max-width: 100%; height: auto; }
 
 /* Apps */
 .label { margin: 0 0 16px; color: var(--muted); font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; }
-.apps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
 .app {
   position: relative;
   display: flex;
   flex-direction: column;
+  min-width: 0;
   min-height: 168px;
   padding: 18px 20px;
   border: 1px solid var(--line);
@@ -125,18 +126,18 @@ img { display: block; max-width: 100%; height: auto; }
 
 @media (max-width: 800px) {
   .hero { grid-template-columns: 1fr; }
-  .apps { grid-template-columns: 1fr; }
   .app { min-height: 0; display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: 14px; }
   .app-index { grid-row: 1; }
   .app-link { margin-top: 0; font-size: 18px; }
   .app-note { grid-column: 2; }
-  .app-foot { grid-column: 1 / -1; }
+  .app-foot { grid-column: 1 / -1; flex-wrap: wrap; gap: 6px; min-width: 0; }
   .postcard { width: min(100% - 40px, 340px); margin-left: auto; margin-right: 12px; }
 }
 
 @media (max-width: 480px) {
   .page { width: calc(100% - 40px); padding-top: 32px; }
   .wordmark { font-size: 24px; }
+  .app { padding: 16px 12px; column-gap: 8px; }
   .postmark { width: 92px; height: 92px; top: -28px; left: -30px; }
 }
 

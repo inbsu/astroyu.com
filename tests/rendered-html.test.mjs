@@ -30,7 +30,7 @@ test("server-renders Yu Hang's minimal homepage", async () => {
 
   const html = await response.text();
   const text = html.replace(/<[^>]+>/g, "");
-  assert.match(html, /<title>与航 — 向前看<\/title>/);
+  assert.match(html, /<title>与航 - 向前看<\/title>/);
   assert.match(html, /<html lang="zh-CN">/);
   assert.match(html, /rel="icon" href="\/favicon\.svg"/);
   assert.match(html, /name="theme-color"/);
@@ -49,6 +49,10 @@ test("server-renders Yu Hang's minimal homepage", async () => {
 
   assert.ok(html.includes('href="https://relay.astroyu.com"'));
   assert.ok(html.includes("看世界"));
+  const appUrls = ["https://relay.astroyu.com", "https://fit.astroyu.com/", "https://photos.astroyu.com", "https://v.astroyu.com"];
+  const appPositions = appUrls.map((url) => html.indexOf(`href="${url}"`));
+  assert.ok(appPositions.every((position) => position >= 0));
+  assert.deepEqual(appPositions, [...appPositions].sort((a, b) => a - b));
   assert.doesNotMatch(html, /3X-UI|docs\.sanaei\.dev/i);
 
   for (const [url, note, provider, providerUrl] of [
@@ -84,7 +88,7 @@ test("build emits a deployable Cloudflare Worker", async () => {
     await readFile(new URL("../dist/server/wrangler.json", import.meta.url), "utf8"),
   );
 
-  assert.equal(config.name, "inbsu-com");
+  assert.equal(config.name, "astroyu-landing");
   assert.equal(config.main, "index.js");
   assert.equal(config.no_bundle, true);
   assert.deepEqual(config.compatibility_flags, ["nodejs_compat"]);

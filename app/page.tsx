@@ -3,6 +3,7 @@
 // Relay deliberately names no provider, so the homepage doesn't advertise what runs behind it.
 const apps: { name: string; href: string; domain: string; note: string; provider?: string; providerHref?: string }[] = [
   { name: "Relay", href: "https://relay.astroyu.com", domain: "relay.astroyu.com", note: "看世界" },
+  { name: "Fit", href: "https://fit.astroyu.com/", domain: "fit.astroyu.com", note: "向前看" },
   { name: "Photos", href: "https://photos.astroyu.com", domain: "photos.astroyu.com", note: "忆往昔", provider: "Immich", providerHref: "https://immich.app/" },
   { name: "Videos", href: "https://v.astroyu.com", domain: "v.astroyu.com", note: "藏所爱", provider: "Jellyfin", providerHref: "https://jellyfin.org/" },
 ];
