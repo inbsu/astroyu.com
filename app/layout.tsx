@@ -11,7 +11,15 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "与航 - 向前看",
     description: "顺路的话，我们看一样的风景。不顺路的话，祝我们都能看到自己想要的风景。",
-    icons: { icon: "/favicon.svg" },
+    manifest: "/site.webmanifest",
+    icons: {
+      icon: [
+        { url: "/favicon.svg?v=2", type: "image/svg+xml" },
+        { url: "/icon-32.png?v=2", type: "image/png", sizes: "32x32" },
+      ],
+      apple: [{ url: "/apple-touch-icon.png?v=2", sizes: "180x180", type: "image/png" }],
+      other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg?v=2", color: "#ff6241" }],
+    },
     openGraph: {
       title: "与航 - 向前看",
       description: "顺路的话，我们看一样的风景。",
@@ -30,8 +38,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbfaf8" },
-    { media: "(prefers-color-scheme: dark)", color: "#121214" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f5f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#131312" },
   ],
 };
 

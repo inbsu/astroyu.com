@@ -32,8 +32,11 @@ test("server-renders Yu Hang's minimal homepage", async () => {
   const text = html.replace(/<[^>]+>/g, "");
   assert.match(html, /<title>与航 - 向前看<\/title>/);
   assert.match(html, /<html lang="zh-CN">/);
-  assert.match(html, /rel="icon" href="\/favicon\.svg"/);
+  assert.match(html, /rel="icon" href="\/favicon\.svg\?v=2"/);
   assert.match(html, /name="theme-color"/);
+  assert.ok(html.includes('/apple-touch-icon.png?v=2'));
+  assert.ok(html.includes('/site.webmanifest'));
+  assert.ok(html.includes('src="/logo.svg"'));
   assert.match(html, /\/og\.jpg/);
   assert.doesNotMatch(html, /og-yuhang\.png/);
 
